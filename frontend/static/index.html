@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprout & Sage | Botanical Care Assistant</title>
+<!-- Google Fonts & Material Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+<!-- Marked JS for Markdown Parsing -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+  :root {
+    --accent: #2d6a4f;
+    --accent-hover: #1b4332;
+    --accent-light: #e8f5e9;
+    --bg: #edf2ee;
+    --surface: #ffffff;
+    --border: #c8e6c9;
+    --text-primary: #1b4332;
+    --text-secondary: #4a6550;
+    --header-bg: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+    --shadow: 0 4px 20px rgba(27, 67, 50, 0.08);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--bg);
+    color: #2b2b2b;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  header {
+    background: var(--header-bg);
+    color: #fff;
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .brand-logo {
+    font-size: 1.6rem;
+    background: rgba(255, 255, 255, 0.15);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+  }
+
+  .brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.8rem;
+    opacity: 0.85;
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #52b788;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #52b788;
+  }
+
+  .header-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .header-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .msg-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .msg-row.user {
+    flex-direction: row-reverse;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .msg-row.agent .avatar {
+    background: #d8f3dc;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  .msg-row.user .avatar {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .bubble-wrapper {
+    max-width: 85%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sender-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .msg-row.user .sender-name {
+    text-align: right;
+  }
+
+  .bubble {
+    padding: 0.85rem 1.1rem;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .bubble p { margin: 0 0 0.5rem 0; }
+  .bubble p:last-child { margin-bottom: 0; }
+  .bubble ul, .bubble ol { margin: 0.4rem 0; padding-left: 1.2rem; }
+
+  .msg-row.user .bubble {
+    background: var(--accent);
+    color: #fff;
+    border-top-right-radius: 4px;
+    border: none;
+  }
+
+  .msg-row.agent .bubble {
+    border-top-left-radius: 4px;
+  }
+
+  .bubble.rich {
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    white-space: normal;
+  }
+
+  /* Prompt Suggestions Panel */
+  .footer-container {
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .prompts-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-left: 0.25rem;
+  }
+
+  .prompts-row {
+    display: flex;
+    gap: 0.6rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+
+  .prompts-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prompt-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.55rem 0.9rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+
+  .prompt-chip:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(45, 106, 79, 0.12);
+  }
+
+  form {
+    display: flex;
+    gap: 0.6rem;
+    background: var(--surface);
+    padding: 0.6rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: transparent;
+  }
+
+  button[type="submit"] {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 12px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  button[type="submit"]:hover {
+    background: var(--accent-hover);
+    transform: scale(1.02);
+  }
+
+  /* A2UI Component Renderers */
+  .a2card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    max-width: 100%;
+  }
+
+  .a2card + .a2card, .a2col > .a2card { margin-top: 0.75rem; }
+  .a2col { display: flex; flex-direction: column; gap: 0.6rem; }
+  .a2row { display: flex; flex-direction: row; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .a2row.between { justify-content: space-between; }
+  .a2text { margin: 0; line-height: 1.5; color: #2b2b2b; }
+  .a2text.a2-h1 { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 700; color: #1b4332; }
+  .a2text.a2-h2 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: #2d6a4f; }
+  .a2text.a2-h3 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; color: #40916c; }
+  .a2text.a2-h4 { font-size: 1rem; font-weight: 600; color: #1b4332; }
+  .a2text.a2-caption { font-size: 0.85rem; color: #555; }
+  .a2divider { border: none; border-top: 1px solid var(--border); margin: 0.6rem 0; width: 100%; }
+  
+  .a2img {
+    max-width: 100%;
+    border-radius: 12px;
+    display: block;
+    margin: 0.6rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+  }
+  .a2img:hover {
+    transform: scale(1.01);
+  }
+
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; line-height: 1; vertical-align: middle; color: var(--accent); }
+
+  /* Loading indicator */
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0.4rem 0.2rem;
+  }
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+  }
+  .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+  .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+  @keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+  }
+
+  /* Lightbox Modal */
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .lightbox-modal.active { display: flex; }
+  .lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    font-weight: 700;
+    background: rgba(255,255,255,0.2);
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-brand">
+    <div class="brand-logo">🌿</div>
+    <div>
+      <h1 class="brand-title">Sprout & Sage</h1>
+      <p class="brand-subtitle">Botanical Care & Inventory Assistant</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="header-btn" onclick="clearChat()">
+      <span>🔄</span> New Chat
+    </button>
+    <div class="status-badge">
+      <span class="status-dot"></span> Online
+    </div>
+  </div>
+</header>
+
+<div id="log"></div>
+
+<div class="footer-container">
+  <div class="prompts-label">Suggested Prompts</div>
+  <div class="prompts-row">
+    <button type="button" class="prompt-chip" onclick="sendPrompt('🌿 Show nursery stock')">
+      <span>🌿</span> Show nursery stock
+    </button>
+    <button type="button" class="prompt-chip" onclick="sendPrompt('💧 How much water does a Monstera need?')">
+      <span>💧</span> Monstera water calculation
+    </button>
+    <button type="button" class="prompt-chip" onclick="sendPrompt('📍 Find nearby garden centers')">
+      <span>📍</span> Find nearby garden centers
+    </button>
+  </div>
+
+  <form id="form">
+    <input id="input" placeholder="Ask Sprout & Sage about plant care, inventory, or watering schedules…" autocomplete="off" autofocus>
+    <button type="submit">
+      <span>Send</span>
+      <span class="material-symbols-outlined" style="color: inherit; font-size: 1.1rem;">send</span>
+    </button>
+  </form>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img" class="lightbox-content" src="" alt="Enlarged plant view">
+</div>
+
+<script>
+const log = document.getElementById("log");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add("active");
+}
+
+function closeLightbox() {
+  lightbox.classList.remove("active");
+}
+
+function clearChat() {
+  log.innerHTML = "";
+  createMessageBubble("agent").innerHTML = marked.parse("Hello! I'm **Sprout & Sage**, your botanical and plant care assistant. How can I assist you with your plants today?");
+}
+
+function createMessageBubble(who) {
+  const row = el("div", "msg-row " + who);
+  const avatar = el("div", "avatar", who === "user" ? "👤" : "🌿");
+  const wrapper = el("div", "bubble-wrapper");
+  const sender = el("div", "sender-name", who === "user" ? "You" : "Sprout & Sage");
+  const bubble = el("div", "bubble");
+
+  wrapper.appendChild(sender);
+  wrapper.appendChild(bubble);
+  row.appendChild(avatar);
+  row.appendChild(wrapper);
+
+  log.appendChild(row);
+  log.scrollTop = log.scrollHeight;
+  return bubble;
+}
+
+function boundStr(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v.literalString === "string") return v.literalString;
+  return "";
+}
+
+function childIds(props) {
+  const ids = [];
+  if (props && typeof props.child === "string") ids.push(props.child);
+  const ch = props && props.children;
+  if (ch && Array.isArray(ch.explicitList)) for (const c of ch.explicitList) if (typeof c === "string") ids.push(c);
+  return ids;
+}
+
+function iconName(n) {
+  return String(n || "").replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/\s+/g, "_").toLowerCase();
+}
+
+function buildNode(id, comps, seen) {
+  if (!id || seen.has(id)) return null;
+  seen.add(id);
+  const spec = comps[id];
+  if (!spec || typeof spec !== "object") return null;
+  const type = Object.keys(spec)[0];
+  const props = spec[type] || {};
+  const kids = () => childIds(props).map(cid => buildNode(cid, comps, seen)).filter(Boolean);
+
+  switch (type) {
+    case "Card": {
+      const d = el("div", "a2card"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Column":
+    case "List": {
+      const horizontal = type === "List" && props.direction === "horizontal";
+      const d = el("div", horizontal ? "a2row" : "a2col"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Row": {
+      const d = el("div", "a2row" + (props.distribution === "spaceBetween" ? " between" : ""));
+      kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Text": {
+      const t = el("div", "a2text");
+      const hint = String(props.usageHint || "body").toLowerCase();
+      if (["h1", "h2", "h3", "h4", "h5", "h6"].includes(hint)) t.classList.add("a2-" + hint);
+      else if (hint === "caption") t.classList.add("a2-caption");
+      
+      const rawText = boundStr(props.text);
+      if (typeof marked !== "undefined") {
+        t.innerHTML = marked.parse(rawText);
+      } else {
+        t.textContent = rawText;
+      }
+      return t;
+    }
+    case "Divider":
+      return el("hr", "a2divider");
+    case "Image": {
+      const src = boundStr(props.url || props.src);
+      if (!/^https?:\/\//i.test(src)) return null;
+      const img = el("img", "a2img");
+      img.src = src;
+      img.alt = boundStr(props.alt) || "Plant image";
+      img.onclick = () => openLightbox(src);
+      return img;
+    }
+    case "Icon": {
+      const s = el("span", "material-symbols-outlined"); s.textContent = iconName(boundStr(props.name) || props.name); return s;
+    }
+    default:
+      return null;
+  }
+}
+
+function renderSurface(messages, container) {
+  const comps = {};
+  const roots = [];
+  for (const m of messages) {
+    if (m.beginRendering && typeof m.beginRendering.root === "string") roots.push(m.beginRendering.root);
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.id && c.component) comps[c.id] = c.component;
+  }
+  let rootIds = roots.filter(r => comps[r]);
+  if (rootIds.length === 0) {
+    const referenced = new Set();
+    for (const id in comps) { const spec = comps[id]; childIds(spec[Object.keys(spec)[0]] || {}).forEach(c => referenced.add(c)); }
+    rootIds = Object.keys(comps).filter(id => !referenced.has(id));
+  }
+  let drew = false;
+  for (const rid of rootIds) { const node = buildNode(rid, comps, new Set()); if (node) { container.appendChild(node); drew = true; } }
+  return drew;
+}
+
+function flattenText(messages) {
+  const out = [];
+  for (const m of messages) {
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.component && c.component.Text) out.push(boundStr(c.component.Text.text));
+  }
+  return out.join("\n").trim();
+}
+
+function renderReply(b, parts) {
+  b.textContent = "";
+  const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
+  const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
+
+  const textStr = texts.join("\n").trim();
+  if (textStr) {
+    const textNode = el("div", null);
+    if (typeof marked !== "undefined") {
+      textNode.innerHTML = marked.parse(textStr);
+    } else {
+      textNode.textContent = textStr;
+    }
+    b.appendChild(textNode);
+  }
+
+  if (a2ui.length) {
+    b.classList.add("rich");
+    if (!renderSurface(a2ui, b)) {
+      const flatNode = el("div", null);
+      const flatText = flattenText(a2ui) || "(no card content)";
+      if (typeof marked !== "undefined") {
+        flatNode.innerHTML = marked.parse(flatText);
+      } else {
+        flatNode.textContent = flatText;
+      }
+      b.appendChild(flatNode);
+    }
+  }
+  if (!b.childNodes.length) b.textContent = "(no response)";
+  log.scrollTop = log.scrollHeight;
+}
+
+async function submitQuery(text) {
+  if (!text) return;
+  createMessageBubble("user").textContent = text;
+  input.value = "";
+  
+  const b = createMessageBubble("agent");
+  const loader = el("div", "typing-indicator");
+  loader.appendChild(el("div", "typing-dot"));
+  loader.appendChild(el("div", "typing-dot"));
+  loader.appendChild(el("div", "typing-dot"));
+  b.appendChild(loader);
+
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text })
+    });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
+    renderReply(b, data.parts || []);
+  } catch (e) {
+    b.textContent = "Error: " + e.message;
+  }
+}
+
+function sendPrompt(promptText) {
+  input.value = promptText;
+  submitQuery(promptText);
+}
+
+form.addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  submitQuery(input.value.trim());
+});
+</script>
+</body>
+</html>

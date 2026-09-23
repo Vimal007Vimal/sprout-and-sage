@@ -6,9 +6,9 @@
 
 ---
 
-## 🤖 Built with Antigravity AI & Gemini
+## 🏆 Built for Cognizant "Build with Gemini AI" Event
 
-This project was co-developed using **Antigravity**, an advanced agentic AI coding assistant built by the **Google DeepMind** team. Powered by Google's **Gemini** foundation models, Antigravity assisted throughout the development lifecycle:
+This project was created as part of the **Build with Gemini AI** hackathon event at **Cognizant**. Co-developed using **Antigravity** (an advanced agentic AI coding assistant built by the **Google DeepMind** team) and powered by Google's **Gemini** foundation models, Antigravity assisted throughout the complete development lifecycle:
 - Architecting the Google Agent Development Kit (ADK) multi-tool reasoning pipeline in `app/agent.py`.
 - Designing and deploying the custom FastAPI proxy & chat interface with real-time A2UI surface rendering on Cloud Run.
 - Integrating Vertex AI Imagen 3 (`imagen-3.0-generate-002`) and Gemini Omni Flash (`gemini-omni-flash-preview`) for multi-modal image and video generation.

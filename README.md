@@ -6,6 +6,16 @@
 
 ---
 
+## 🤖 Built with Antigravity AI & Gemini
+
+This project was co-developed using **Antigravity**, an advanced agentic AI coding assistant built by the **Google DeepMind** team. Powered by Google's **Gemini** foundation models, Antigravity assisted throughout the development lifecycle:
+- Architecting the Google Agent Development Kit (ADK) multi-tool reasoning pipeline in `app/agent.py`.
+- Designing and deploying the custom FastAPI proxy & chat interface with real-time A2UI surface rendering on Cloud Run.
+- Integrating Vertex AI Imagen 3 (`imagen-3.0-generate-002`) and Gemini Omni Flash (`gemini-omni-flash-preview`) for multi-modal image and video generation.
+- Wiring up persistent Google Cloud Firestore database tools and ADK cross-session memory bank capabilities.
+
+---
+
 ## 🌿 Implemented Features & Architecture
 
 Based on the codebase in `app/` and `agents-cli-manifest.yaml`, the agent actively implements the following capabilities:
